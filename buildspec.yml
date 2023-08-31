@@ -8,9 +8,10 @@ phases:
   build:
     commands:
       - echo "Running Ansible Playbooks"
-      - ansible-playbook -i inventory.ini playbooks/setup_mongodb_shards.yml
-      - ansible-playbook -i inventory.ini playbooks/setup_mongodb_router.yml
+      - ansible-playbook -i inventory.ini --extra-vars "@variables/variables.yml" playbooks/setup_mongodb_shards.yml
+      - ansible-playbook -i inventory.ini --extra-vars "@variables/variables.yml" playbooks/setup_mongodb_router.yml
 
   post_build:
     commands:
       - echo "Post-building phase"
+
