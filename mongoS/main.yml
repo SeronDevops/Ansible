@@ -1,8 +1,0 @@
----
-- name: Provision and Configure MongoDB Routers
-  hosts: router_hosts
-  become: yes
-  vars_files:
-    - ../../variables/mongodb_vars.yml
-  tasks:
-    # Tasks for provisioning and configuring MongoDB routers (mongos)
