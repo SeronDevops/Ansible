@@ -1,0 +1,35 @@
+user www-data;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
+
+events {
+    worker_connections 768;
+    # Other event-related configurations can be added here
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    access_log /var/log/nginx/access.log;
+
+    sendfile on;
+    # Other sendfile-related configurations can be added here
+
+    keepalive_timeout 65;
+
+    server {
+        listen 80;
+        server_name _;
+
+        location / {
+            root /var/www/html;  # Change to your application's root directory
+            index index.html;
+        }
+
+        # Other server configurations can be added here
+    }
+
+    # Other http-related configurations can be added here
+}
