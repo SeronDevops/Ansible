@@ -4,18 +4,36 @@
   gather_facts: no
   become: yes
   tasks:
-    - name: Include MongoDB Config Server Role
-      include_role:
-        name: mongodb_config_server
-
-    - name: Include MongoDB Shard Server Role
+    - name: Include MongoDB Shard Server Role - Shard_1
       include_role:
         name: mongodb_shard_server
+      vars:
+        mongodb_username: Seun
+        mongodb_password: Seron
+        mongodb_replica_set_name: myshard
+        mongodb_shard_number: 1
+        mongodb_shard_instance: Shard_1
+        # Add other necessary variables for MongoDB shard setup
 
-    - name: Include MongoDB Router Role
+    - name: Include MongoDB Shard Server Role - Shard_2
       include_role:
-        name: mongodb_router
+        name: mongodb_shard_server
+      vars:
+        mongodb_username: Seun
+        mongodb_password: Seron
+        mongodb_replica_set_name: myshard
+        mongodb_shard_number: 2
+        mongodb_shard_instance: Shard_2
+        # Add other necessary variables for MongoDB shard setup
 
     - name: Include Nginx Role
       include_role:
         name: nginx
+      vars:
+        nginx_sites:
+          - name: mysite
+            listen: 80
+            server_name: localhost
+            root: /usr/share/nginx/html
+            index: index.html
+        # Add other necessary variables for Nginx setup
