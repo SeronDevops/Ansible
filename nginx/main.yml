@@ -1,20 +1,22 @@
 ---
-- name: Install Nginx
-  hosts: nginx_servers
+- name: Deploy Nginx Servers
+  hosts: nginx_web_servers
   become: yes
   tasks:
-    - name: Install Nginx
-      apt:
+    - name: Copy Nginx Configuration
+      template:
+        src: nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+      notify:
+        - Restart Nginx
+
+    - name: Copy Index HTML File
+      copy:
+        src: index.html
+        dest: /usr/share/nginx/html/index.html
+
+  handlers:
+    - name: Restart Nginx
+      systemd:
         name: nginx
-        state: present
-
-- name: Start Nginx service
-  systemd:
-    name: nginx
-    state: started
-    enabled: yes
-
-- name: Deploy index.html
-  copy:
-    src: index.html
-    dest: /usr/share/nginx/html/index.html
+        state: restarted
